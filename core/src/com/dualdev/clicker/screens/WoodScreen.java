@@ -1,27 +1,17 @@
 package com.dualdev.clicker.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.dualdev.clicker.resource.initalizer.WoodInitializer;
 import com.dualdev.clicker.resource.model.*;
 import com.dualdev.clicker.screens.util.AbstractScreen;
 import com.dualdev.clicker.screens.util.ClickerHeaders;
-import com.dualdev.clicker.screens.util.ScreenEnum;
-import com.dualdev.clicker.screens.util.ScreenManager;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class WoodScreen extends AbstractScreen {
     private static WoodResource woodResource;
@@ -41,6 +31,7 @@ public class WoodScreen extends AbstractScreen {
     @Override
     public void buildStage() {
         skin = new Skin(Gdx.files.internal("skin/flat-earth-ui.json"));
+
 		Table fullViewTable = new Table();
 		fullViewTable.setFillParent(true);
 		Drawable background =
@@ -52,14 +43,13 @@ public class WoodScreen extends AbstractScreen {
 		bodyTable = new Table();
 
         WoodInitializer woodInitializer = new WoodInitializer();
-        bodyTable = woodInitializer.initializeWoodButtons(scale,woodResource, bodyTable,skin);
+        bodyTable = woodInitializer.initializeWoodButtons(scale, woodResource, bodyTable, skin);
 
         fullViewTable.add(headerTable);
         fullViewTable.row().pad(10,0,10,0);
         fullViewTable.add(bodyTable);
         super.addActor(fullViewTable);
     }
-
 
     @Override
     public void pause() { }

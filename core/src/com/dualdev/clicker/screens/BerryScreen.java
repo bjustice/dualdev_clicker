@@ -3,23 +3,14 @@ package com.dualdev.clicker.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.dualdev.clicker.resource.initalizer.WoodInitializer;
 import com.dualdev.clicker.resource.model.*;
 import com.dualdev.clicker.screens.util.AbstractScreen;
 import com.dualdev.clicker.screens.util.ClickerHeaders;
-import com.dualdev.clicker.screens.util.ScreenEnum;
-import com.dualdev.clicker.screens.util.ScreenManager;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class BerryScreen extends AbstractScreen {
     private static WoodResource woodResource;
@@ -46,7 +37,7 @@ public class BerryScreen extends AbstractScreen {
         Drawable background =
                 new TextureRegionDrawable(new TextureRegion(new Texture("wood_background.jpg")));
         fullViewTable.setBackground(background);
-        Table headerTable = ClickerHeaders.berryHeaders();
+        Table headerTable = ClickerHeaders.berryHeaders(skin);
 
         fullViewTable.add(headerTable);
         super.addActor(fullViewTable);

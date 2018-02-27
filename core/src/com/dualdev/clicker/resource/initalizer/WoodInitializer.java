@@ -16,6 +16,8 @@ public class WoodInitializer {
     private final static String UPGRADE_TAP_BASE = "Upgrade Tap\n Cost (w): ";
     private final static String WOOD_INCOME = "Wood Income: ";
     private final static String TOTAL_WOOD = "Total Wood: ";
+    private final static String RESOURCE_NAME = "Wood Resource: ";
+    private final static String GATHER_RESOURCE_NAME = "Chop Wood";
 
     public Table initializeWoodButtons(float s, WoodResource woodRes, Table masterWoodTable, Skin sk) {
         this.scale = s;
@@ -53,7 +55,7 @@ public class WoodInitializer {
                 int updatedTotal = woodResource.getAmountStored() + woodResource.getIdleIncome();
                 woodResource.setAmountStored(updatedTotal);
                 woodCountText.setText(TOTAL_WOOD + woodResource.getAmountStored());
-                Gdx.app.log("Wood Resource",
+                Gdx.app.log(RESOURCE_NAME,
                         "Income tick. amount: " + woodResource.getIdleIncome());
             }
         },1,1);
@@ -118,9 +120,7 @@ public class WoodInitializer {
     }
 
     private TextButton createWoodClickButton(final TextField woodCount) {
-        TextButton woodTextButton = new TextButton("Chop Wood", skin);
-        woodTextButton.setHeight(80f/scale);
-        woodTextButton.setWidth(20f/scale);
+        TextButton woodTextButton = new TextButton(GATHER_RESOURCE_NAME, skin);
 
         woodTextButton.addListener(new InputListener() {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
