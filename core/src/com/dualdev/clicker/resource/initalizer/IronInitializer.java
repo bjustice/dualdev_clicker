@@ -12,8 +12,8 @@ public class IronInitializer {
     private IronResource ironResource;
     private Skin skin;
 
-    private final static String UPGRADE_INCOME_BASE = "Upgrade Income\n Cost (w): ";
-    private final static String UPGRADE_TAP_BASE = "Upgrade Tap\n Cost (w): ";
+    private final static String UPGRADE_INCOME_BASE = "Upgrade Income\n Cost (i): ";
+    private final static String UPGRADE_TAP_BASE = "Upgrade Tap\n Cost (i): ";
     private final static String IRON_INCOME = "Iron Income: ";
     private final static String TOTAL_IRON = "Total Iron: ";
     private final static String RESOURCE_NAME = "Iron Resource: ";

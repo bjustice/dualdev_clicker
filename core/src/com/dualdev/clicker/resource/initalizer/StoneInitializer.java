@@ -12,8 +12,8 @@ public class StoneInitializer {
     private StoneResource stoneResource;
     private Skin skin;
 
-    private final static String UPGRADE_INCOME_BASE = "Upgrade Income\n Cost (w): ";
-    private final static String UPGRADE_TAP_BASE = "Upgrade Tap\n Cost (w): ";
+    private final static String UPGRADE_INCOME_BASE = "Upgrade Income\n Cost (s): ";
+    private final static String UPGRADE_TAP_BASE = "Upgrade Tap\n Cost (s): ";
     private final static String STONE_INCOME = "Stone Income: ";
     private final static String TOTAL_STONE = "Total Stone: ";
     private final static String RESOURCE_NAME = "Stone Resource: ";
