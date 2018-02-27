@@ -13,9 +13,9 @@ public class ClickerHeaders {
 
 
     private static boolean woodEnabled;
-    private static  boolean berryEnabled;
-    private static  boolean stoneEnabled;
-    private static  boolean ironEnabled;
+    private static boolean berryEnabled;
+    private static boolean stoneEnabled;
+    private static boolean ironEnabled;
     private static Skin skin;
 
     public static  Table woodHeaders(Skin s) {
@@ -27,7 +27,8 @@ public class ClickerHeaders {
         return createHeaderTable();
     }
 
-    public static  Table berryHeaders() {
+    public static  Table berryHeaders(Skin s) {
+        skin = s;
         woodEnabled = true;
         berryEnabled = false;
         stoneEnabled = true;
@@ -35,7 +36,8 @@ public class ClickerHeaders {
         return createHeaderTable();
     }
 
-    public static  Table stoneHeaders() {
+    public static  Table stoneHeaders(Skin s) {
+        skin = s;
         woodEnabled = true;
         berryEnabled = true;
         stoneEnabled = false;
@@ -43,7 +45,8 @@ public class ClickerHeaders {
         return createHeaderTable();
     }
 
-    public static  Table ironHeaders() {
+    public static  Table ironHeaders(Skin s) {
+        skin = s;
         woodEnabled = true;
         berryEnabled = true;
         stoneEnabled = true;
@@ -63,7 +66,7 @@ public class ClickerHeaders {
                 }
 
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                    ScreenManager.getInstance().showScreen(ScreenEnum.BERRY_SCREEN);
+                    ScreenManager.getInstance().showScreen(ScreenEnum.WOOD_SCREEN);
                 }
             });
         }

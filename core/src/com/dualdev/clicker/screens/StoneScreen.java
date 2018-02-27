@@ -3,22 +3,15 @@ package com.dualdev.clicker.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.dualdev.clicker.resource.initalizer.StoneInitializer;
 import com.dualdev.clicker.resource.model.*;
 import com.dualdev.clicker.screens.util.AbstractScreen;
 import com.dualdev.clicker.screens.util.ClickerHeaders;
-import com.dualdev.clicker.screens.util.ScreenEnum;
-import com.dualdev.clicker.screens.util.ScreenManager;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class StoneScreen extends AbstractScreen {
     private static WoodResource woodResource;
@@ -33,7 +26,6 @@ public class StoneScreen extends AbstractScreen {
     private float scale;
 
     public StoneScreen() {
-
     }
 
     @Override
@@ -43,11 +35,19 @@ public class StoneScreen extends AbstractScreen {
         Table fullViewTable = new Table();
         fullViewTable.setFillParent(true);
         Drawable background =
-                new TextureRegionDrawable(new TextureRegion(new Texture("wood_background.jpg")));
+                new TextureRegionDrawable(new TextureRegion(new Texture("gray_background.png")));
         fullViewTable.setBackground(background);
-        Table headerTable = ClickerHeaders.stoneHeaders();
+        Table headerTable = ClickerHeaders.stoneHeaders(skin);
+
+        stoneResource = new StoneResource();
+        bodyTable = new Table();
+
+        StoneInitializer stoneInitializer = new StoneInitializer();
+        bodyTable = stoneInitializer.initializeStoneButtons(scale, stoneResource, bodyTable, skin);
 
         fullViewTable.add(headerTable);
+        fullViewTable.row().pad(10,0,10,0);
+        fullViewTable.add(bodyTable);
         super.addActor(fullViewTable);
     }
 

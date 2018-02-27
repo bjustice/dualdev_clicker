@@ -1,24 +1,44 @@
 package com.dualdev.clicker.resource.model;
 
-public interface ClickResource {
+public abstract class ClickResource {
 
-    int getTapReturn();
+    protected static int resourcePerTap;
+    protected static int idleIncome;
+    protected static int amountStored;
+    protected static int tapUpgradeCost;
+    protected static int idleUpgradeCost;
+    protected static int totalTapUpgrades;
+    protected static int totalIdleUpgrades;
 
-    void setTapReturn(int val);
+    public int getTapReturn() {
+        return resourcePerTap;
+    }
 
-    void upgradeTapReturn();
+    public void setTapReturn(int val) {
+        resourcePerTap = val;
+    }
 
-    int getIdleIncome();
+    public int getIdleIncome() {
+        return idleIncome;
+    }
 
-    void setIdleIncome(int val);
+    public void setIdleIncome(int val) {
+        idleIncome = val;
+    }
 
-    void upgradeIdleIncome();
+    public int getAmountStored() {
+        return amountStored;
+    }
 
-    int getAmountStored();
+    public void setAmountStored(int val) {
+        amountStored = val;
+    }
 
-    void setAmountStored(int val);
+    public int getTapUpgradeCost() {
+        return tapUpgradeCost;
+    }
 
-    int getTapUpgradeCost();
-
-    int getIdleUpgradeCost();
+    public int getIdleUpgradeCost() {
+        return idleUpgradeCost;
+    }
 }
