@@ -2,7 +2,7 @@ package com.dualdev.clicker.resource.model;
 
 public class WoodResource extends ClickResource{
 
-    public  WoodResource() {
+    public WoodResource() {
         resourcePerTap = 1;
         idleIncome = 0;
         amountStored = 0;

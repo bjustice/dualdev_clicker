@@ -15,7 +15,7 @@ import com.dualdev.clicker.screens.util.ClickerHeaders;
 
 public class WoodScreen extends AbstractScreen {
 
-    private static ResourceManager resourceManager;
+    private ResourceManager resourceManager;
 
     private Table bodyTable;
     private Stage stage;

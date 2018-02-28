@@ -13,7 +13,6 @@ public class ResourceManager {
         ironResource = new IronResource();
     }
 
-
     public WoodResource getWoodResource() {
         return woodResource;
     }
@@ -22,9 +21,7 @@ public class ResourceManager {
         return berryResource;
     }
 
-    public StoneResource getStoneResource() {
-        return stoneResource;
-    }
+    public StoneResource getStoneResource() { return stoneResource; }
 
     public IronResource getIronResource() {
         return ironResource;

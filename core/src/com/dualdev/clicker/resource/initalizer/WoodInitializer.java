@@ -19,7 +19,7 @@ public class WoodInitializer {
     private final static String RESOURCE_NAME = "Wood Resource: ";
     private final static String GATHER_RESOURCE_NAME = "Chop Wood";
 
-    public Table initializeWoodButtons(float s, WoodResource woodRes, Table masterWoodTable, Skin sk) {
+    public Table initializeWoodButtons(float s, final WoodResource woodRes, Table masterWoodTable, Skin sk) {
         this.scale = s;
         this.woodResource = woodRes;
         this.skin = sk;
