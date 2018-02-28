@@ -14,19 +14,16 @@ import com.dualdev.clicker.screens.util.AbstractScreen;
 import com.dualdev.clicker.screens.util.ClickerHeaders;
 
 public class BerryScreen extends AbstractScreen {
-    private static WoodResource woodResource;
-    private static BerryResource berryResource;
-    private static StoneResource stoneResource;
-    private static IronResource ironResource;
-    private static PeopleModel peopleModel;
+
+    private static ResourceManager resourceManager;
 
     private Table bodyTable;
     private Stage stage;
     private Skin skin;
     private float scale;
 
-    public BerryScreen() {
-
+    public BerryScreen(ResourceManager rm) {
+        resourceManager = rm;
     }
 
     @Override
@@ -38,13 +35,11 @@ public class BerryScreen extends AbstractScreen {
         Drawable background =
                 new TextureRegionDrawable(new TextureRegion(new Texture("wood_background.jpg")));
         fullViewTable.setBackground(background);
-        Table headerTable = ClickerHeaders.berryHeaders(skin);
-
-        berryResource = new BerryResource();
+        Table headerTable = ClickerHeaders.berryHeaders(resourceManager, skin);
         bodyTable = new Table();
 
         BerryInitializer berryInitializer = new BerryInitializer();
-        bodyTable = berryInitializer.initializeBerryButtons(scale, berryResource, bodyTable, skin);
+        bodyTable = berryInitializer.initializeBerryButtons(scale, resourceManager.getBerryResource(), bodyTable, skin);
 
         fullViewTable.add(headerTable);
         fullViewTable.row().pad(10,0,10,0);

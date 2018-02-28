@@ -2,6 +2,7 @@ package com.dualdev.clicker.screens.util;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
+import com.dualdev.clicker.resource.model.ResourceManager;
 
 public class ScreenManager {
 
@@ -30,13 +31,13 @@ public class ScreenManager {
     }
 
     // Show in the game the screen which enum type is received
-    public void showScreen(ScreenEnum screenEnum, Object... params) {
+    public void showScreen(ResourceManager resourceManager, ScreenEnum screenEnum, Object... params) {
 
         // Get current screen to dispose it
         Screen currentScreen = game.getScreen();
 
         // Show new screen
-        AbstractScreen newScreen = screenEnum.getScreen(params);
+        AbstractScreen newScreen = screenEnum.getScreen(resourceManager, params);
         newScreen.buildStage();
         game.setScreen(newScreen);
 

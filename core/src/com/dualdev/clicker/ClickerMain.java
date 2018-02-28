@@ -18,7 +18,7 @@ public class ClickerMain extends Game {
 	@Override
 	public void create () {
         ScreenManager.getInstance().initialize(this);
-        ScreenManager.getInstance().showScreen(ScreenEnum.START_SPLASH);
+        ScreenManager.getInstance().showScreen(new ResourceManager(),ScreenEnum.START_SPLASH);
 	}
 
 	@Override

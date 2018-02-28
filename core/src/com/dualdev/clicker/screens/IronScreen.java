@@ -14,19 +14,16 @@ import com.dualdev.clicker.screens.util.AbstractScreen;
 import com.dualdev.clicker.screens.util.ClickerHeaders;
 
 public class IronScreen extends AbstractScreen {
-    private static WoodResource woodResource;
-    private static BerryResource berryResource;
-    private static StoneResource stoneResource;
-    private static IronResource ironResource;
-    private static PeopleModel peopleModel;
+
+    private static ResourceManager resourceManager;
 
     private Table bodyTable;
     private Stage stage;
     private Skin skin;
     private float scale;
 
-    public IronScreen() {
-
+    public IronScreen(ResourceManager rm) {
+        resourceManager = rm;
     }
 
     @Override
@@ -38,13 +35,11 @@ public class IronScreen extends AbstractScreen {
         Drawable background =
                 new TextureRegionDrawable(new TextureRegion(new Texture("iron_background.png")));
         fullViewTable.setBackground(background);
-        Table headerTable = ClickerHeaders.ironHeaders(skin);
-
-        ironResource = new IronResource();
+        Table headerTable = ClickerHeaders.ironHeaders(resourceManager, skin);
         bodyTable = new Table();
 
         IronInitializer ironInitializer = new IronInitializer();
-        bodyTable = ironInitializer.initializeIronButtons(scale, ironResource, bodyTable, skin);
+        bodyTable = ironInitializer.initializeIronButtons(scale, resourceManager.getIronResource(), bodyTable, skin);
 
         fullViewTable.add(headerTable);
         fullViewTable.row().pad(10,0,10,0);

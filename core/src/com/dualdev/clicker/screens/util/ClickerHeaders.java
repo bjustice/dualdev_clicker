@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.dualdev.clicker.resource.model.ResourceManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +17,12 @@ public class ClickerHeaders {
     private static boolean berryEnabled;
     private static boolean stoneEnabled;
     private static boolean ironEnabled;
+    private static ResourceManager resourceManager;
     private static Skin skin;
 
-    public static  Table woodHeaders(Skin s) {
+    public static  Table woodHeaders(ResourceManager rm, Skin s) {
         skin = s;
+        resourceManager = rm;
         woodEnabled = false;
         berryEnabled = true;
         stoneEnabled = true;
@@ -27,8 +30,9 @@ public class ClickerHeaders {
         return createHeaderTable();
     }
 
-    public static  Table berryHeaders(Skin s) {
+    public static  Table berryHeaders(ResourceManager rm, Skin s) {
         skin = s;
+        resourceManager = rm;
         woodEnabled = true;
         berryEnabled = false;
         stoneEnabled = true;
@@ -36,8 +40,9 @@ public class ClickerHeaders {
         return createHeaderTable();
     }
 
-    public static  Table stoneHeaders(Skin s) {
+    public static  Table stoneHeaders(ResourceManager rm, Skin s) {
         skin = s;
+        resourceManager = rm;
         woodEnabled = true;
         berryEnabled = true;
         stoneEnabled = false;
@@ -45,8 +50,9 @@ public class ClickerHeaders {
         return createHeaderTable();
     }
 
-    public static  Table ironHeaders(Skin s) {
+    public static  Table ironHeaders(ResourceManager rm, Skin s) {
         skin = s;
+        resourceManager = rm;
         woodEnabled = true;
         berryEnabled = true;
         stoneEnabled = true;
@@ -66,7 +72,7 @@ public class ClickerHeaders {
                 }
 
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                    ScreenManager.getInstance().showScreen(ScreenEnum.WOOD_SCREEN);
+                    ScreenManager.getInstance().showScreen(resourceManager, ScreenEnum.WOOD_SCREEN);
                 }
             });
         }
@@ -78,7 +84,7 @@ public class ClickerHeaders {
                 }
 
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                    ScreenManager.getInstance().showScreen(ScreenEnum.BERRY_SCREEN);
+                    ScreenManager.getInstance().showScreen(resourceManager, ScreenEnum.BERRY_SCREEN);
                 }
             });
         }
@@ -90,7 +96,7 @@ public class ClickerHeaders {
                 }
 
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                    ScreenManager.getInstance().showScreen(ScreenEnum.STONE_SCREEN);
+                    ScreenManager.getInstance().showScreen(resourceManager, ScreenEnum.STONE_SCREEN);
                 }
             });
         }
@@ -102,7 +108,7 @@ public class ClickerHeaders {
                 }
 
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                    ScreenManager.getInstance().showScreen(ScreenEnum.IRON_SCREEN);
+                    ScreenManager.getInstance().showScreen(resourceManager,  ScreenEnum.IRON_SCREEN);
                 }
             });
         }
