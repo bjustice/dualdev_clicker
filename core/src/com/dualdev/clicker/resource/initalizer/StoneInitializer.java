@@ -19,7 +19,7 @@ public class StoneInitializer {
     private final static String RESOURCE_NAME = "Stone Resource: ";
     private final static String GATHER_RESOURCE_NAME = "Mine Stone";
 
-    public Table initializeStoneButtons(float s, StoneResource stoneRes, Table masterStoneTable, Skin sk) {
+    public Table initializeStoneButtons(float s, final StoneResource stoneRes, Table masterStoneTable, Skin sk) {
         this.scale = s;
         this.stoneResource = stoneRes;
         this.skin = sk;
@@ -123,6 +123,7 @@ public class StoneInitializer {
         TextButton stoneTextButton = new TextButton(GATHER_RESOURCE_NAME, skin);
 
         stoneTextButton.addListener(new InputListener() {
+
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 return true;
             }

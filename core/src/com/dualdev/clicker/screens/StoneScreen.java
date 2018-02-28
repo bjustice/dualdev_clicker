@@ -15,9 +15,7 @@ import com.dualdev.clicker.screens.util.ClickerHeaders;
 
 public class StoneScreen extends AbstractScreen {
 
-    private static ResourceManager resourceManager;
-
-
+    private ResourceManager resourceManager;
     private Table bodyTable;
     private Stage stage;
     private Skin skin;

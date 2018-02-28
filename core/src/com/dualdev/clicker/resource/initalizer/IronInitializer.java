@@ -19,7 +19,7 @@ public class IronInitializer {
     private final static String RESOURCE_NAME = "Iron Resource: ";
     private final static String GATHER_RESOURCE_NAME = "Mine Iron";
 
-    public Table initializeIronButtons(float s, IronResource ironRes, Table masterIronTable, Skin sk) {
+    public Table initializeIronButtons(float s, final IronResource ironRes, Table masterIronTable, Skin sk) {
         this.scale = s;
         this.ironResource = ironRes;
         this.skin = sk;

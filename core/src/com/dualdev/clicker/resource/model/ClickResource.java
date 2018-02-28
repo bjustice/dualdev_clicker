@@ -2,13 +2,13 @@ package com.dualdev.clicker.resource.model;
 
 public abstract class ClickResource {
 
-    protected static int resourcePerTap;
-    protected static int idleIncome;
-    protected static int amountStored;
-    protected static int tapUpgradeCost;
-    protected static int idleUpgradeCost;
-    protected static int totalTapUpgrades;
-    protected static int totalIdleUpgrades;
+    protected int resourcePerTap;
+    protected int idleIncome;
+    protected int amountStored;
+    protected int tapUpgradeCost;
+    protected int idleUpgradeCost;
+    protected int totalTapUpgrades;
+    protected int totalIdleUpgrades;
 
     public int getTapReturn() {
         return resourcePerTap;

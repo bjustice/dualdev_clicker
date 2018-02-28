@@ -10,7 +10,6 @@ public class BerryResource extends ClickResource {
         idleUpgradeCost = 10;
         totalTapUpgrades = 0;
         totalIdleUpgrades = 0;
-
     }
 
     public void upgradeTapReturn() {

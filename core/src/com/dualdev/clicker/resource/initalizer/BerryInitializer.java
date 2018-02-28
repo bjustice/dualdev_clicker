@@ -15,11 +15,11 @@ public class BerryInitializer {
     private final static String UPGRADE_INCOME_BASE = "Upgrade Income\n Cost (w) ";
     private final static String UPGRADE_TAP_BASE = "Upgrade Tap\n Cost (w)";
     private final static String BERRY_INCOME = "Berry Income: ";
-    private final static String TOTAL_BERRIES = "Total Berries";
+    private final static String TOTAL_BERRIES = "Total Berries: ";
     private final static String RESOURCE_NAME = "Wood Resource: ";
     private final static String GATHER_RESOURCE_NAME = "Pick Berries";
 
-    public Table initializeBerryButtons(float s, BerryResource berryRes, Table masterBerryTable, Skin sk) {
+    public Table initializeBerryButtons(float s, final BerryResource berryRes, Table masterBerryTable, Skin sk) {
         this.scale = s;
         this.berryResource = berryRes;
         this.skin  = sk;
