@@ -3,10 +3,7 @@ package com.dualdev.clicker.resource.initalizer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Timer;
 import com.dualdev.clicker.resource.model.BerryResource;
 
@@ -19,7 +16,8 @@ public class BerryInitializer {
     private final static String UPGRADE_TAP_BASE = "Upgrade Tap\n Cost (w)";
     private final static String BERRY_INCOME = "Berry Income: ";
     private final static String TOTAL_BERRIES = "Total Berries";
-    private final static String GATHER_RESOURCE_NAME = "Chop Wood";
+    private final static String RESOURCE_NAME = "Wood Resource: ";
+    private final static String GATHER_RESOURCE_NAME = "Pick Berries";
 
     public Table initializeBerryButtons(float s, BerryResource berryRes, Table masterBerryTable, Skin sk) {
         this.scale = s;
@@ -37,7 +35,7 @@ public class BerryInitializer {
         statsTable.add(berryIncomeText);
         masterBerryTable.add(statsTable);
 
-        masterBerryTable.row().pad(0,5,0,5);
+        masterBerryTable.row().pad(5,0,5,0);
         masterBerryTable.add(berryResourceButton).fillX();
         masterBerryTable.row().pad(5, 0, 5, 0);
 
@@ -56,20 +54,20 @@ public class BerryInitializer {
                 int updateTotal = berryResource.getAmountStored() + berryResource.getIdleIncome();
                 berryResource.setAmountStored(updateTotal);
                 berryCountText.setText(TOTAL_BERRIES + berryResource.getAmountStored());
-                Gdx.app.log( "Berry Resource",
+                Gdx.app.log( RESOURCE_NAME,
                         "Income tick. amount: " + berryResource.getIdleIncome());
             }
         }, 1, 1);
     }
 
     private TextField createBerryCountText() {
-        TextField countArea = new TextField(TOTAL_BERRIES + berryResource.getAmountStored(), skin);
+        TextField countArea = new TextArea(TOTAL_BERRIES + berryResource.getAmountStored(), skin);
         countArea.setDisabled(true);
         return countArea;
     }
 
     private TextField createBerryIncomeText() {
-        TextField incomeArea = new TextField(BERRY_INCOME + berryResource.getIdleIncome(), skin);
+        TextField incomeArea = new TextArea(BERRY_INCOME + berryResource.getIdleIncome(), skin);
         incomeArea.setDisabled(true);
         return incomeArea;
     }

@@ -4,12 +4,12 @@ public class BerryResource extends ClickResource {
 
     public BerryResource() {
         resourcePerTap = 0;
-        idleIncome = 1;
+        idleIncome = 0;
         amountStored = 0;
         tapUpgradeCost = 50;
         idleUpgradeCost = 10;
         totalTapUpgrades = 0;
-        totalIdleUpgrades = 1;
+        totalIdleUpgrades = 0;
 
     }
 
