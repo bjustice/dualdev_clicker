@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.dualdev.clicker.resource.initalizer.WoodInitializer;
+import com.dualdev.clicker.resource.initalizer.BerryInitializer;
 import com.dualdev.clicker.resource.model.*;
 import com.dualdev.clicker.screens.util.AbstractScreen;
 import com.dualdev.clicker.screens.util.ClickerHeaders;
@@ -48,7 +49,15 @@ public class BerryScreen extends AbstractScreen {
         fullViewTable.setBackground(background);
         Table headerTable = ClickerHeaders.berryHeaders();
 
+        berryResource = new BerryResource();
+        bodyTable = new Table();
+
+        BerryInitializer berryInitializer = new BerryInitializer();
+        bodyTable = berryInitializer.initializeBerryButtons(scale, berryResource, bodyTable, skin);
+
         fullViewTable.add(headerTable);
+        fullViewTable.row().pad(10,0,10,0);
+        fullViewTable.add(bodyTable);
         super.addActor(fullViewTable);
     }
 
