@@ -3,7 +3,7 @@ package com.dualdev.clicker.resource.model;
 public class BerryResource extends ClickResource {
 
     public BerryResource() {
-        resourcePerTap = 0;
+        resourcePerTap = 1;
         idleIncome = 0;
         amountStored = 0;
         tapUpgradeCost = 50;

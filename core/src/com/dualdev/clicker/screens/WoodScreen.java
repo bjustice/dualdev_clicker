@@ -39,7 +39,7 @@ public class WoodScreen extends AbstractScreen {
 		bodyTable = new Table();
 
         WoodInitializer woodInitializer = new WoodInitializer();
-        bodyTable = woodInitializer.initializeWoodButtons(scale, resourceManager.getWoodResource(), bodyTable, skin);
+        bodyTable = woodInitializer.initializeWoodButtons(scale, resourceManager, bodyTable, skin);
 
         fullViewTable.add(headerTable);
         fullViewTable.row().pad(10,0,10,0);
