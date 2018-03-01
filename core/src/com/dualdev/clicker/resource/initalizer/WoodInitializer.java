@@ -9,7 +9,6 @@ import com.dualdev.clicker.resource.helpers.Resource;
 import com.dualdev.clicker.resource.model.ResourceManager;
 
 public class WoodInitializer {
-    private float scale;
     private ResourceManager resourceManager;
     private Skin skin;
 
@@ -20,8 +19,7 @@ public class WoodInitializer {
     private final static String RESOURCE_NAME = "Wood Resource: ";
     private final static String GATHER_RESOURCE_NAME = "Chop Wood";
 
-    public Table initializeWoodButtons(float s, final ResourceManager rm, Table masterWoodTable, Skin sk) {
-        this.scale = s;
+    public Table initializeWoodButtons(final ResourceManager rm, Table masterWoodTable, Skin sk) {
         this.resourceManager = rm;
         this.skin = sk;
 
@@ -50,15 +48,12 @@ public class WoodInitializer {
     }
 
     private void scheduleIncomeUpdate(final TextField woodCountText) {
-        Timer.schedule(new Timer.Task() {
+        resourceManager.getUITimer(Resource.WOOD).scheduleTask(new Timer.Task() {
             @Override
             public void run() {
-                int updatedTotal =
-                        resourceManager.getAmountStored(Resource.WOOD) + resourceManager.getIdleIncome(Resource.WOOD);
-                resourceManager.setAmountStored(Resource.WOOD, updatedTotal);
                 woodCountText.setText(TOTAL_WOOD + resourceManager.getAmountStored(Resource.WOOD));
                 Gdx.app.log(RESOURCE_NAME,
-                        "Income tick. amount: " + resourceManager.getIdleIncome(Resource.WOOD));
+                        "UI TICK");
             }
         },1,1);
     }

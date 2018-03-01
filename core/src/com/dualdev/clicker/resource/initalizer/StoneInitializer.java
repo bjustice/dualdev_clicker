@@ -5,11 +5,12 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Timer;
+import com.dualdev.clicker.resource.helpers.Resource;
+import com.dualdev.clicker.resource.model.ResourceManager;
 import com.dualdev.clicker.resource.model.StoneResource;
 
 public class StoneInitializer {
-    private float scale;
-    private StoneResource stoneResource;
+    private ResourceManager resourceManager;
     private Skin skin;
 
     private final static String UPGRADE_INCOME_BASE = "Upgrade Income\n Cost (s): ";
@@ -19,9 +20,8 @@ public class StoneInitializer {
     private final static String RESOURCE_NAME = "Stone Resource: ";
     private final static String GATHER_RESOURCE_NAME = "Mine Stone";
 
-    public Table initializeStoneButtons(float s, final StoneResource stoneRes, Table masterStoneTable, Skin sk) {
-        this.scale = s;
-        this.stoneResource = stoneRes;
+    public Table initializeStoneButtons(final ResourceManager rm, Table masterStoneTable, Skin sk) {
+        this.resourceManager = rm;
         this.skin = sk;
 
         final TextField stoneCountText = createStoneCountText();
@@ -49,33 +49,31 @@ public class StoneInitializer {
     }
 
     private void scheduleIncomeUpdate(final TextField stoneCountText) {
-        Timer.schedule(new Timer.Task() {
+        resourceManager.getUITimer(Resource.STONE).scheduleTask(new Timer.Task() {
             @Override
             public void run() {
-                int updatedTotal = stoneResource.getAmountStored() + stoneResource.getIdleIncome();
-                stoneResource.setAmountStored(updatedTotal);
-                stoneCountText.setText(TOTAL_STONE + stoneResource.getAmountStored());
+                stoneCountText.setText(TOTAL_STONE + resourceManager.getAmountStored(Resource.STONE));
                 Gdx.app.log(RESOURCE_NAME,
-                        "Income tick. amount: " + stoneResource.getIdleIncome());
+                        "UI TICK");
             }
         },1,1);
     }
 
     private TextField createStoneCountText() {
-        TextField countArea = new TextArea(TOTAL_STONE + stoneResource.getAmountStored(), skin);
+        TextField countArea = new TextArea(TOTAL_STONE + resourceManager.getAmountStored(Resource.STONE), skin);
         countArea.setDisabled(true);
         return countArea;
     }
 
     private TextField createStoneIncomeText() {
-        TextField incomeArea = new TextArea(STONE_INCOME + stoneResource.getIdleIncome(), skin);
+        TextField incomeArea = new TextArea(STONE_INCOME + resourceManager.getIdleIncome(Resource.STONE), skin);
         incomeArea.setDisabled(true);
         return incomeArea;
     }
 
     private TextButton createStoneClickUpgradeButton(final TextField stoneCount) {
         final TextButton stoneTapUpgradeButton =
-                new TextButton(UPGRADE_TAP_BASE + stoneResource.getTapUpgradeCost(), skin);
+                new TextButton(UPGRADE_TAP_BASE + resourceManager.getTapUpgradeCost(Resource.STONE), skin);
 
         stoneTapUpgradeButton.addListener(new InputListener() {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -83,12 +81,12 @@ public class StoneInitializer {
             }
 
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                int currentUpgradeCost = stoneResource.getTapUpgradeCost();
-                if(currentUpgradeCost <= stoneResource.getAmountStored()) {
-                    stoneResource.upgradeTapReturn();
-                    stoneTapUpgradeButton.setText(UPGRADE_TAP_BASE + stoneResource.getTapUpgradeCost());
-                    stoneResource.setAmountStored(stoneResource.getAmountStored() - currentUpgradeCost);
-                    stoneCount.setText(TOTAL_STONE + stoneResource.getAmountStored());
+                int currentUpgradeCost = resourceManager.getTapUpgradeCost(Resource.STONE);
+                if(currentUpgradeCost <= resourceManager.getAmountStored(Resource.STONE)) {
+                    resourceManager.upgradeTapReturn(Resource.STONE);
+                    stoneTapUpgradeButton.setText(UPGRADE_TAP_BASE + resourceManager.getTapUpgradeCost(Resource.STONE));
+                    resourceManager.setAmountStored(Resource.STONE,resourceManager.getAmountStored(Resource.STONE) - currentUpgradeCost);
+                    stoneCount.setText(TOTAL_STONE + resourceManager.getAmountStored(Resource.STONE));
                 }
             }
         });
@@ -98,7 +96,7 @@ public class StoneInitializer {
 
     private TextButton createStoneIncomeUpgradeButton(final TextField stoneCount, final TextField stoneIncome) {
         final TextButton stoneIncomeUpgradeButton =
-                new TextButton(UPGRADE_INCOME_BASE + stoneResource.getIdleUpgradeCost() , skin);
+                new TextButton(UPGRADE_INCOME_BASE + resourceManager.getIdleUpgradeCost(Resource.STONE) , skin);
 
         stoneIncomeUpgradeButton.addListener(new InputListener() {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -106,13 +104,13 @@ public class StoneInitializer {
             }
 
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                int currentUpgradeCost = stoneResource.getIdleUpgradeCost();
-                if(currentUpgradeCost <= stoneResource.getAmountStored()) {
-                    stoneResource.upgradeIdleIncome();
-                    stoneIncome.setText(STONE_INCOME + stoneResource.getIdleIncome());
-                    stoneIncomeUpgradeButton.setText(UPGRADE_INCOME_BASE + stoneResource.getIdleUpgradeCost());
-                    stoneResource.setAmountStored(stoneResource.getAmountStored() - currentUpgradeCost);
-                    stoneCount.setText(TOTAL_STONE + stoneResource.getAmountStored());
+                int currentUpgradeCost = resourceManager.getIdleUpgradeCost(Resource.STONE);
+                if(currentUpgradeCost <= resourceManager.getAmountStored(Resource.STONE)) {
+                    resourceManager.upgradeIdleIncome(Resource.STONE);
+                    stoneIncome.setText(STONE_INCOME + resourceManager.getIdleIncome(Resource.STONE));
+                    stoneIncomeUpgradeButton.setText(UPGRADE_INCOME_BASE + resourceManager.getIdleUpgradeCost(Resource.STONE));
+                    resourceManager.setAmountStored(Resource.STONE,resourceManager.getAmountStored(Resource.STONE) - currentUpgradeCost);
+                    stoneCount.setText(TOTAL_STONE + resourceManager.getAmountStored(Resource.STONE));
                 }
             }
         });
@@ -129,8 +127,8 @@ public class StoneInitializer {
             }
 
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                int newTotal = stoneResource.getAmountStored()+ stoneResource.getTapReturn();
-                stoneResource.setAmountStored(newTotal);
+                int newTotal = resourceManager.getAmountStored(Resource.STONE)+ resourceManager.getTapReturn(Resource.STONE);
+                resourceManager.setAmountStored(Resource.STONE, newTotal);
                 stoneCount.setText(TOTAL_STONE + newTotal);
             }
         });

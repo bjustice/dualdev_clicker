@@ -5,11 +5,12 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Timer;
+import com.dualdev.clicker.resource.helpers.Resource;
 import com.dualdev.clicker.resource.model.IronResource;
+import com.dualdev.clicker.resource.model.ResourceManager;
 
 public class IronInitializer {
-    private float scale;
-    private IronResource ironResource;
+    private ResourceManager resourceManager;
     private Skin skin;
 
     private final static String UPGRADE_INCOME_BASE = "Upgrade Income\n Cost (i): ";
@@ -19,9 +20,8 @@ public class IronInitializer {
     private final static String RESOURCE_NAME = "Iron Resource: ";
     private final static String GATHER_RESOURCE_NAME = "Mine Iron";
 
-    public Table initializeIronButtons(float s, final IronResource ironRes, Table masterIronTable, Skin sk) {
-        this.scale = s;
-        this.ironResource = ironRes;
+    public Table initializeIronButtons(final ResourceManager rm, Table masterIronTable, Skin sk) {
+        this.resourceManager = rm;
         this.skin = sk;
 
         final TextField ironCountText = createIronCountText();
@@ -49,33 +49,31 @@ public class IronInitializer {
     }
 
     private void scheduleIncomeUpdate(final TextField ironCountText) {
-        Timer.schedule(new Timer.Task() {
+        resourceManager.getUITimer(Resource.IRON).scheduleTask(new Timer.Task() {
             @Override
             public void run() {
-                int updatedTotal = ironResource.getAmountStored() + ironResource.getIdleIncome();
-                ironResource.setAmountStored(updatedTotal);
-                ironCountText.setText(TOTAL_IRON + ironResource.getAmountStored());
+                ironCountText.setText(TOTAL_IRON + resourceManager.getAmountStored(Resource.IRON));
                 Gdx.app.log(RESOURCE_NAME,
-                        "Income tick. amount: " + ironResource.getIdleIncome());
+                        "UI TICK");
             }
         },1,1);
     }
 
     private TextField createIronCountText() {
-        TextField countArea = new TextArea(TOTAL_IRON + ironResource.getAmountStored(), skin);
+        TextField countArea = new TextArea(TOTAL_IRON + resourceManager.getAmountStored(Resource.IRON), skin);
         countArea.setDisabled(true);
         return countArea;
     }
 
     private TextField createIronIncomeText() {
-        TextField incomeArea = new TextArea(IRON_INCOME + ironResource.getIdleIncome(), skin);
+        TextField incomeArea = new TextArea(IRON_INCOME + resourceManager.getIdleIncome(Resource.IRON), skin);
         incomeArea.setDisabled(true);
         return incomeArea;
     }
 
     private TextButton createIronClickUpgradeButton(final TextField ironCount) {
         final TextButton ironTapUpgradeButton =
-                new TextButton(UPGRADE_TAP_BASE + ironResource.getTapUpgradeCost(), skin);
+                new TextButton(UPGRADE_TAP_BASE + resourceManager.getTapUpgradeCost(Resource.IRON), skin);
 
         ironTapUpgradeButton.addListener(new InputListener() {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -83,12 +81,12 @@ public class IronInitializer {
             }
 
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                int currentUpgradeCost = ironResource.getTapUpgradeCost();
-                if(currentUpgradeCost <= ironResource.getAmountStored()) {
-                    ironResource.upgradeTapReturn();
-                    ironTapUpgradeButton.setText(UPGRADE_TAP_BASE + ironResource.getTapUpgradeCost());
-                    ironResource.setAmountStored(ironResource.getAmountStored() - currentUpgradeCost);
-                    ironCount.setText(TOTAL_IRON + ironResource.getAmountStored());
+                int currentUpgradeCost = resourceManager.getTapUpgradeCost(Resource.IRON);
+                if(currentUpgradeCost <= resourceManager.getAmountStored(Resource.IRON)) {
+                    resourceManager.upgradeTapReturn(Resource.IRON);
+                    ironTapUpgradeButton.setText(UPGRADE_TAP_BASE + resourceManager.getTapUpgradeCost(Resource.IRON));
+                    resourceManager.setAmountStored(Resource.IRON, resourceManager.getAmountStored(Resource.IRON) - currentUpgradeCost);
+                    ironCount.setText(TOTAL_IRON + resourceManager.getAmountStored(Resource.IRON));
                 }
             }
         });
@@ -98,7 +96,7 @@ public class IronInitializer {
 
     private TextButton createIronIncomeUpgradeButton(final TextField ironCount, final TextField ironIncome) {
         final TextButton ironIncomeUpgradeButton =
-                new TextButton(UPGRADE_INCOME_BASE + ironResource.getIdleUpgradeCost() , skin);
+                new TextButton(UPGRADE_INCOME_BASE + resourceManager.getIdleUpgradeCost(Resource.IRON) , skin);
 
         ironIncomeUpgradeButton.addListener(new InputListener() {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -106,13 +104,13 @@ public class IronInitializer {
             }
 
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                int currentUpgradeCost = ironResource.getIdleUpgradeCost();
-                if(currentUpgradeCost <= ironResource.getAmountStored()) {
-                    ironResource.upgradeIdleIncome();
-                    ironIncome.setText(IRON_INCOME + ironResource.getIdleIncome());
-                    ironIncomeUpgradeButton.setText(UPGRADE_INCOME_BASE + ironResource.getIdleUpgradeCost());
-                    ironResource.setAmountStored(ironResource.getAmountStored() - currentUpgradeCost);
-                    ironCount.setText(TOTAL_IRON + ironResource.getAmountStored());
+                int currentUpgradeCost = resourceManager.getIdleUpgradeCost(Resource.IRON);
+                if(currentUpgradeCost <= resourceManager.getAmountStored(Resource.IRON)) {
+                    resourceManager.upgradeIdleIncome(Resource.IRON);
+                    ironIncome.setText(IRON_INCOME + resourceManager.getIdleIncome(Resource.IRON));
+                    ironIncomeUpgradeButton.setText(UPGRADE_INCOME_BASE + resourceManager.getIdleUpgradeCost(Resource.IRON));
+                    resourceManager.setAmountStored(Resource.IRON,resourceManager.getAmountStored(Resource.IRON) - currentUpgradeCost);
+                    ironCount.setText(TOTAL_IRON + resourceManager.getAmountStored(Resource.IRON));
                 }
             }
         });
@@ -128,8 +126,8 @@ public class IronInitializer {
             }
 
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                int newTotal = ironResource.getAmountStored()+ ironResource.getTapReturn();
-                ironResource.setAmountStored(newTotal);
+                int newTotal = resourceManager.getAmountStored(Resource.IRON)+ resourceManager.getTapReturn(Resource.IRON);
+                resourceManager.setAmountStored(Resource.IRON, newTotal);
                 ironCount.setText(TOTAL_IRON + newTotal);
             }
         });

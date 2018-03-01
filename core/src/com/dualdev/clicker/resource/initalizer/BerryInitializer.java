@@ -5,11 +5,12 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Timer;
+import com.dualdev.clicker.resource.helpers.Resource;
 import com.dualdev.clicker.resource.model.BerryResource;
+import com.dualdev.clicker.resource.model.ResourceManager;
 
 public class BerryInitializer {
-    private float scale;
-    private BerryResource berryResource;
+    private ResourceManager resourceManager;
     private Skin skin;
 
     private final static String UPGRADE_INCOME_BASE = "Upgrade Income\n Cost (w) ";
@@ -19,9 +20,8 @@ public class BerryInitializer {
     private final static String RESOURCE_NAME = "Berry Resource: ";
     private final static String GATHER_RESOURCE_NAME = "Pick Berries";
 
-    public Table initializeBerryButtons(float s, final BerryResource berryRes, Table masterBerryTable, Skin sk) {
-        this.scale = s;
-        this.berryResource = berryRes;
+    public Table initializeBerryButtons(final ResourceManager rm, Table masterBerryTable, Skin sk) {
+        this.resourceManager = rm;
         this.skin  = sk;
 
         final TextField berryCountText = createBerryCountText();
@@ -49,43 +49,41 @@ public class BerryInitializer {
     }
 
     private void scheduleIncomeUpdate(final TextField berryCountText){
-        Timer.schedule(new Timer.Task() {
+        resourceManager.getUITimer(Resource.BERRIES).scheduleTask(new Timer.Task() {
             @Override public void run() {
-                int updateTotal = berryResource.getAmountStored() + berryResource.getIdleIncome();
-                berryResource.setAmountStored(updateTotal);
-                berryCountText.setText(TOTAL_BERRIES + berryResource.getAmountStored());
-                Gdx.app.log( RESOURCE_NAME,
-                        "Income tick. amount: " + berryResource.getIdleIncome());
+                berryCountText.setText(TOTAL_BERRIES + resourceManager.getAmountStored(Resource.BERRIES));
+                Gdx.app.log(RESOURCE_NAME,
+                        "UI TICK");
             }
         }, 1, 1);
     }
 
     private TextField createBerryCountText() {
-        TextField countArea = new TextArea(TOTAL_BERRIES + berryResource.getAmountStored(), skin);
+        TextField countArea = new TextArea(TOTAL_BERRIES + resourceManager.getAmountStored(Resource.BERRIES), skin);
         countArea.setDisabled(true);
         return countArea;
     }
 
     private TextField createBerryIncomeText() {
-        TextField incomeArea = new TextArea(BERRY_INCOME + berryResource.getIdleIncome(), skin);
+        TextField incomeArea = new TextArea(BERRY_INCOME + resourceManager.getIdleIncome(Resource.BERRIES), skin);
         incomeArea.setDisabled(true);
         return incomeArea;
     }
 
     private TextButton createBerryClickUpgradeButton(final TextField berryCount) {
         final TextButton berryTapUpgradeButton =
-                new TextButton(UPGRADE_TAP_BASE + berryResource.getTapUpgradeCost(), skin);
+                new TextButton(UPGRADE_TAP_BASE + resourceManager.getTapUpgradeCost(Resource.BERRIES), skin);
 
         berryTapUpgradeButton.addListener(new InputListener() {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {return true;
             }
             public void touchUp (InputEvent event, float x, float y, int pointer, int button){
-                int currentUpgradeCost = berryResource.getTapUpgradeCost();
-                if(currentUpgradeCost <= berryResource.getAmountStored()) {
-                    berryResource.upgradeTapReturn();
-                    berryTapUpgradeButton.setText(UPGRADE_TAP_BASE + berryResource.getTapUpgradeCost());
-                    berryResource.setAmountStored(berryResource.getAmountStored() - currentUpgradeCost);
-                    berryCount.setText(TOTAL_BERRIES + berryResource.getAmountStored());
+                int currentUpgradeCost = resourceManager.getTapUpgradeCost(Resource.BERRIES);
+                if(currentUpgradeCost <= resourceManager.getAmountStored(Resource.BERRIES)) {
+                    resourceManager.upgradeTapReturn(Resource.BERRIES);
+                    berryTapUpgradeButton.setText(UPGRADE_TAP_BASE + resourceManager.getTapUpgradeCost(Resource.BERRIES));
+                    resourceManager.setAmountStored(Resource.BERRIES,resourceManager.getAmountStored(Resource.BERRIES) - currentUpgradeCost);
+                    berryCount.setText(TOTAL_BERRIES + resourceManager.getAmountStored(Resource.BERRIES));
                 }
             }
         });
@@ -94,20 +92,20 @@ public class BerryInitializer {
 
     private TextButton createBerryIncomeUpgradeButton(final TextField berryCount, final TextField berryIncome) {
         final TextButton berryIncomeUpgradeButton =
-                new TextButton(UPGRADE_INCOME_BASE + berryResource.getIdleUpgradeCost(), skin);
+                new TextButton(UPGRADE_INCOME_BASE + resourceManager.getIdleUpgradeCost(Resource.BERRIES), skin);
 
         berryIncomeUpgradeButton.addListener(new InputListener() {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) { return true;
             }
 
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                int currentUpgradeCost = berryResource.getIdleUpgradeCost();
-                if(currentUpgradeCost <= berryResource.getAmountStored())  {
-                    berryResource.upgradeIdleIncome();
-                    berryIncome.setText(BERRY_INCOME + berryResource.getIdleIncome());
-                    berryIncomeUpgradeButton.setText(UPGRADE_INCOME_BASE + berryResource.getIdleUpgradeCost());
-                    berryResource.setAmountStored(berryResource.getAmountStored() - currentUpgradeCost);
-                    berryCount.setText(TOTAL_BERRIES + berryResource.getAmountStored());
+                int currentUpgradeCost = resourceManager.getIdleUpgradeCost(Resource.BERRIES);
+                if(currentUpgradeCost <= resourceManager.getAmountStored(Resource.BERRIES))  {
+                    resourceManager.upgradeIdleIncome(Resource.BERRIES);
+                    berryIncome.setText(BERRY_INCOME + resourceManager.getIdleIncome(Resource.BERRIES));
+                    berryIncomeUpgradeButton.setText(UPGRADE_INCOME_BASE + resourceManager.getIdleUpgradeCost(Resource.BERRIES));
+                    resourceManager.setAmountStored(Resource.BERRIES,resourceManager.getAmountStored(Resource.BERRIES) - currentUpgradeCost);
+                    berryCount.setText(TOTAL_BERRIES + resourceManager.getAmountStored(Resource.BERRIES));
                 }
             }
         });
@@ -123,8 +121,8 @@ public class BerryInitializer {
             }
 
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                int newTotal = berryResource.getAmountStored() + berryResource.getTapReturn();
-                berryResource.setAmountStored(newTotal);
+                int newTotal = resourceManager.getAmountStored(Resource.BERRIES) + resourceManager.getTapReturn(Resource.BERRIES);
+                resourceManager.setAmountStored(Resource.BERRIES, newTotal);
                 berryCount.setText(TOTAL_BERRIES + newTotal);
             }
         });

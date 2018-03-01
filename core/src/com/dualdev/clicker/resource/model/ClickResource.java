@@ -1,5 +1,7 @@
 package com.dualdev.clicker.resource.model;
 
+import com.badlogic.gdx.utils.Timer;
+
 public abstract class ClickResource {
 
     protected int resourcePerTap;
@@ -9,6 +11,7 @@ public abstract class ClickResource {
     protected int idleUpgradeCost;
     protected int totalTapUpgrades;
     protected int totalIdleUpgrades;
+    protected Timer UITimer;
 
     public int getTapReturn() {
         return resourcePerTap;
@@ -40,5 +43,13 @@ public abstract class ClickResource {
 
     public int getIdleUpgradeCost() {
         return idleUpgradeCost;
+    }
+
+    public Timer getUITimer() {
+        return UITimer;
+    }
+
+    public void setUITimer(Timer UITimer) {
+        this.UITimer = UITimer;
     }
 }

@@ -20,7 +20,6 @@ public class BerryScreen extends AbstractScreen {
     private Table bodyTable;
     private Stage stage;
     private Skin skin;
-    private float scale;
 
     public BerryScreen(ResourceManager rm) {
         resourceManager = rm;
@@ -29,17 +28,18 @@ public class BerryScreen extends AbstractScreen {
     @Override
     public void buildStage() {
         skin = new Skin(Gdx.files.internal("skin/flat-earth-ui.json"));
+        resourceManager.clearUITimers();
 
         Table fullViewTable = new Table();
         fullViewTable.setFillParent(true);
         Drawable background =
-                new TextureRegionDrawable(new TextureRegion(new Texture("wood_background.jpg")));
+                new TextureRegionDrawable(new TextureRegion(new Texture("berry_background.png")));
         fullViewTable.setBackground(background);
         Table headerTable = ClickerHeaders.berryHeaders(resourceManager, skin);
         bodyTable = new Table();
 
         BerryInitializer berryInitializer = new BerryInitializer();
-        bodyTable = berryInitializer.initializeBerryButtons(scale, resourceManager.getBerryResource(), bodyTable, skin);
+        bodyTable = berryInitializer.initializeBerryButtons(resourceManager, bodyTable, skin);
 
         fullViewTable.add(headerTable);
         fullViewTable.row().pad(10,0,10,0);

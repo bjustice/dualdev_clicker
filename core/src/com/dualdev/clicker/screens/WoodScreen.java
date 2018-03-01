@@ -18,9 +18,7 @@ public class WoodScreen extends AbstractScreen {
     private ResourceManager resourceManager;
 
     private Table bodyTable;
-    private Stage stage;
     private Skin skin;
-    private float scale;
 
     public WoodScreen(ResourceManager rm) {
         resourceManager = rm;
@@ -29,6 +27,7 @@ public class WoodScreen extends AbstractScreen {
     @Override
     public void buildStage() {
         skin = new Skin(Gdx.files.internal("skin/flat-earth-ui.json"));
+        resourceManager.clearUITimers();
 
 		Table fullViewTable = new Table();
 		fullViewTable.setFillParent(true);
@@ -39,7 +38,7 @@ public class WoodScreen extends AbstractScreen {
 		bodyTable = new Table();
 
         WoodInitializer woodInitializer = new WoodInitializer();
-        bodyTable = woodInitializer.initializeWoodButtons(scale, resourceManager, bodyTable, skin);
+        bodyTable = woodInitializer.initializeWoodButtons(resourceManager, bodyTable, skin);
 
         fullViewTable.add(headerTable);
         fullViewTable.row().pad(10,0,10,0);

@@ -28,6 +28,7 @@ public class StoneScreen extends AbstractScreen {
     @Override
     public void buildStage() {
         skin = new Skin(Gdx.files.internal("skin/flat-earth-ui.json"));
+        resourceManager.clearUITimers();
 
         Table fullViewTable = new Table();
         fullViewTable.setFillParent(true);
@@ -38,7 +39,7 @@ public class StoneScreen extends AbstractScreen {
         bodyTable = new Table();
 
         StoneInitializer stoneInitializer = new StoneInitializer();
-        bodyTable = stoneInitializer.initializeStoneButtons(scale, resourceManager.getStoneResource(), bodyTable, skin);
+        bodyTable = stoneInitializer.initializeStoneButtons(resourceManager, bodyTable, skin);
 
         fullViewTable.add(headerTable);
         fullViewTable.row().pad(10,0,10,0);

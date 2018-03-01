@@ -1,5 +1,7 @@
 package com.dualdev.clicker.resource.model;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.Timer;
 import com.dualdev.clicker.resource.helpers.Resource;
 
 public class ResourceManager {
@@ -7,12 +9,56 @@ public class ResourceManager {
     private BerryResource berryResource;
     private StoneResource stoneResource;
     private IronResource ironResource;
+    private Timer incomeTimer;
 
     public ResourceManager() {
         woodResource = new WoodResource();
         berryResource = new BerryResource();
         stoneResource = new StoneResource();
         ironResource = new IronResource();
+        createTimer();
+    }
+
+    public void clearUITimers() {
+        woodResource.getUITimer().clear();
+        berryResource.getUITimer().clear();
+        stoneResource.getUITimer().clear();
+        ironResource.getUITimer().clear();
+    }
+
+    private void createTimer() {
+        woodResource.setUITimer(new Timer());
+        berryResource.setUITimer(new Timer());
+        stoneResource.setUITimer(new Timer());
+        ironResource.setUITimer(new Timer());
+
+        incomeTimer = new Timer();
+        incomeTimer.scheduleTask(new Timer.Task() {
+            @Override
+            public void run() {
+                int updatedWood =
+                        getAmountStored(Resource.WOOD) + getIdleIncome(Resource.WOOD);
+                setAmountStored(Resource.WOOD, updatedWood);
+
+                int updatedBerries =
+                        getAmountStored(Resource.BERRIES) + getIdleIncome(Resource.BERRIES);
+                setAmountStored(Resource.BERRIES, updatedBerries);
+
+                int updatedStone =
+                        getAmountStored(Resource.STONE) + getIdleIncome(Resource.STONE);
+                setAmountStored(Resource.STONE, updatedStone);
+
+                int updateIron =
+                        getAmountStored(Resource.IRON) + getIdleIncome(Resource.IRON);
+                setAmountStored(Resource.IRON, updateIron);
+
+                Gdx.app.log("GLOBAL INCOME TICK",
+                        "Wood amount: " + getIdleIncome(Resource.WOOD) +
+                                "\nBerries amount: " + getIdleIncome(Resource.BERRIES) +
+                                "\nStone amount: " + getIdleIncome(Resource.STONE) +
+                                "\nIron amount: " + getIdleIncome(Resource.IRON));
+            }
+        },1,1);
     }
 
     public WoodResource getWoodResource() {
@@ -156,7 +202,7 @@ public class ResourceManager {
     }
 
     public void upgradeTapReturn(Resource resource) {
-        switch(resource){
+        switch(resource) {
             case WOOD:
                 woodResource.upgradeTapReturn();
                 break;
@@ -173,7 +219,7 @@ public class ResourceManager {
     }
 
     public void upgradeIdleIncome(Resource resource) {
-        switch(resource){
+        switch(resource) {
             case WOOD:
                 woodResource.upgradeIdleIncome();
                 break;
@@ -186,6 +232,21 @@ public class ResourceManager {
             case IRON:
                 ironResource.upgradeIdleIncome();
                 break;
+        }
+    }
+
+    public Timer getUITimer(Resource resource) {
+        switch (resource) {
+            case WOOD:
+                return woodResource.getUITimer();
+            case BERRIES:
+                return berryResource.getUITimer();
+            case STONE:
+                return stoneResource.getUITimer();
+            case IRON:
+                return ironResource.getUITimer();
+            default:
+                return null;
         }
     }
 }

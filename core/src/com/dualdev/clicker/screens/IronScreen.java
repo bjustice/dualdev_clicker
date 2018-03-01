@@ -29,6 +29,7 @@ public class IronScreen extends AbstractScreen {
     @Override
     public void buildStage() {
         skin = new Skin(Gdx.files.internal("skin/flat-earth-ui.json"));
+        resourceManager.clearUITimers();
 
         Table fullViewTable = new Table();
         fullViewTable.setFillParent(true);
@@ -39,7 +40,7 @@ public class IronScreen extends AbstractScreen {
         bodyTable = new Table();
 
         IronInitializer ironInitializer = new IronInitializer();
-        bodyTable = ironInitializer.initializeIronButtons(scale, resourceManager.getIronResource(), bodyTable, skin);
+        bodyTable = ironInitializer.initializeIronButtons(resourceManager, bodyTable, skin);
 
         fullViewTable.add(headerTable);
         fullViewTable.row().pad(10,0,10,0);
