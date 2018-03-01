@@ -16,7 +16,7 @@ public class BerryInitializer {
     private final static String UPGRADE_TAP_BASE = "Upgrade Tap\n Cost (w)";
     private final static String BERRY_INCOME = "Berry Income: ";
     private final static String TOTAL_BERRIES = "Total Berries: ";
-    private final static String RESOURCE_NAME = "Wood Resource: ";
+    private final static String RESOURCE_NAME = "Berry Resource: ";
     private final static String GATHER_RESOURCE_NAME = "Pick Berries";
 
     public Table initializeBerryButtons(float s, final BerryResource berryRes, Table masterBerryTable, Skin sk) {
@@ -118,7 +118,8 @@ public class BerryInitializer {
         TextButton berryTextButton = new TextButton(GATHER_RESOURCE_NAME, skin);
 
         berryTextButton.addListener(new InputListener() {
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {return true;
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
             }
 
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
